@@ -1,0 +1,9 @@
+.section-image-text {
+  &:not(.image-left) {
+    @include breakpoint(tablet) {
+      .content-cell {
+        order: -1;
+      }
+    }
+  }
+}

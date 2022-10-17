@@ -1,0 +1,27 @@
+.menu {
+  --padding-x: 1rem;
+  --padding-y: 0.5rem;
+
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  margin: 0 calc(-1 * var(--padding-x));
+
+  > li {
+    padding: var(--padding-y) var(--padding-x);
+    > a {
+      display: inline-block;
+    }
+    &.is-active > a {
+      font-weight: 800;
+      pointer-events: none;
+    }
+  }
+
+  &.has-columns {
+    columns: 2;
+    display: block;
+  }
+}

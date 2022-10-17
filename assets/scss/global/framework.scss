@@ -1,0 +1,245 @@
+// --------------------------------
+// SASS
+// --------------------------------
+@use "sass:map";
+@use "sass:list";
+
+// --------------------------------
+// MIXINS
+// --------------------------------
+
+@function breakpoint-over($breakpoint, $target) {
+  $amount: map.get($breakpoints, $breakpoint);
+  $targetAmount: map.get($breakpoints, $target);
+  @if ($amount and $targetAmount and $amount > $targetAmount) {
+    @return true;
+  }
+  @return false;
+}
+
+@mixin breakpoint($breakpoint) {
+  $amount: map.get($breakpoints, $breakpoint);
+  @if ($amount and $amount != 0px) {
+    @media screen and (min-width: $amount) {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}
+
+@mixin add-breakpoint($prefix, $breakpoint, $suffix) {
+  @if ($breakpoint == "xs") {
+    #{$prefix}-#{$suffix} {
+      @content;
+    }
+  } @else {
+    #{$prefix}-#{$breakpoint}-#{$suffix} {
+      @content;
+    }
+  }
+}
+
+@mixin add-breakpoints($prefix, $breakpoints, $suffix: "") {
+  @each $breakpoint, $amount in $breakpoints {
+    @include add-breakpoint($prefix, $breakpoint, $suffix) {
+      @content;
+    }
+  }
+}
+
+@mixin construct-breakpoint-var($var, $value, $query: ":root") {
+  @if (list.length($value) <= 1) {
+    $value: (
+      xs: $value,
+    );
+  }
+  @each $breakpoint, $amount in $value {
+    @include breakpoint($breakpoint) {
+      #{$query} {
+        #{$var}: #{$amount};
+      }
+    }
+  }
+}
+
+// --------------------------------
+// GLOBAL VARS
+// --------------------------------
+:root {
+  --grid-gap-x: var(--grid-gap);
+  --grid-gap-y: var(--grid-gap);
+  --container-max-width: #{$container-width};
+}
+
+// --------------------------------
+// RESET
+// --------------------------------
+* {
+  box-sizing: border-box;
+}
+
+// --------------------------------
+// SECTIONS
+// --------------------------------
+.page-section {
+  padding: var(--section-spacing) 0;
+}
+@include construct-breakpoint-var("--section-spacing", $section-spacing);
+
+// --------------------------------
+// STACKS
+// --------------------------------
+.vstack {
+  --gap-y: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-y);
+}
+.hstack {
+  display: flex;
+  flex: wrap;
+  gap: var(--gap-x);
+}
+
+// --------------------------------
+// CONTAINER
+// --------------------------------
+.container-fluid,
+.container {
+  --gap-x: var(--container-spacing);
+  max-width: var(--container-max-width);
+  width: 100%;
+  padding: 0 var(--gap-x);
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+}
+@include construct-breakpoint-var("--container-spacing", $container-spacing);
+
+.container {
+  width: var(--container-width, 100%);
+}
+
+// container widths
+@if ($container-breakpoints) {
+  @each $breakpoint, $amount in $container-breakpoints {
+    @if (breakpoint-over($breakpoint, $container-min-breakpoint)) {
+      @include breakpoint($breakpoint) {
+        :root {
+          --container-width: #{$amount};
+        }
+      }
+    }
+  }
+}
+
+// --------------------------------
+// ROW
+// --------------------------------
+.row {
+  --cols: 12;
+  --gap-x: var(--grid-gap-x);
+  --gap-y: var(--grid-gap-y);
+  --n-gap-x: calc(-1 * var(--gap-x));
+  --n-gap-y: calc(-1 * var(--gap-y));
+  margin: var(--n-gap-y) var(--n-gap-x);
+  display: flex;
+  flex-wrap: wrap;
+  width: calc(100% + var(--gap-x) * 2);
+}
+
+// row cols
+@if ($row-breakpoints) {
+  @each $breakpoint, $amount in $row-breakpoints {
+    @include breakpoint($breakpoint) {
+      @for $col from 1 through $row-cols {
+        @include add-breakpoint(".row", $breakpoint, $col) {
+          --cols: #{$col};
+        }
+      }
+    }
+  }
+}
+
+@include construct-breakpoint-var("--grid-gap", $grid-gap);
+
+// --------------------------------
+// COL
+// --------------------------------
+
+// fill out .row > .col's without modifiers
+.row:not([class*="row-"]) > .col:not([class*="col-"]) {
+  flex: 1;
+}
+
+.col {
+  flex: 0 0 auto;
+  --size: var(--col, 1);
+  padding: var(--gap-y) var(--gap-x);
+  width: calc(100% / var(--cols) * var(--size));
+  margin-left: calc(100% / var(--cols) * var(--offset, 0));
+}
+
+// col breakpoints (.col-md-1)
+@if ($col-breakpoints) {
+  @each $breakpoint, $amount in $col-breakpoints {
+    @include breakpoint($breakpoint) {
+      @for $col from 1 through $cols {
+        @include add-breakpoint(".col", $breakpoint, $col) {
+          --col: #{$col};
+        }
+      }
+    }
+  }
+}
+
+// col offsets
+// col breakpoints (.col-md-1)
+@if ($col-offset-breakpoints) {
+  @each $breakpoint, $amount in $col-offset-breakpoints {
+    @include breakpoint($breakpoint) {
+      @for $col from 1 through $col-offsets {
+        @include add-breakpoint(".col-offset", $breakpoint, $col) {
+          --offset: #{$col};
+        }
+      }
+    }
+  }
+}
+
+// --------------------------------
+// GAP
+// --------------------------------
+
+@if ($gap-breakpoints) {
+  @each $breakpoint, $amount in $gap-breakpoints {
+    @include breakpoint($breakpoint) {
+      @each $gap, $amount in $gaps {
+        @include add-breakpoint(".g", $breakpoint, $gap) {
+          --gap-x: #{$amount};
+          --gap-y: #{$amount};
+        }
+        @include add-breakpoint(".gx", $breakpoint, $gap) {
+          --gap-x: #{$amount};
+        }
+        @include add-breakpoint(".gy", $breakpoint, $gap) {
+          --gap-y: #{$amount};
+        }
+      }
+    }
+  }
+}
+
+// helpers
+.align-items-center {
+  align-items: center;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
+.justify-content-between {
+  justify-content: space-between;
+}

@@ -1,0 +1,179 @@
+// general
+// html {
+//   height: 100vh;
+//   overflow: hidden;
+// }
+
+*,
+:before,
+*:after {
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+
+  max-width: 100vw;
+  // overflow: auto;
+  margin: 0;
+  font-family: var(--body-font);
+
+  // cache header height
+  --header-height: 66px;
+}
+
+// test!!1
+
+main#main {
+  padding-top: var(--header-height);
+  // overflow-x: hidden;
+  // height: 1000vh;
+}
+
+// -------------------------------------------- //
+// GLOBAL
+// -------------------------------------------- //
+
+// default picture styling
+picture {
+  margin: 0;
+  padding: 0;
+  display: block;
+
+  > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  // modifiers
+  // ---------
+  &.has-filter {
+    position: relative;
+    &:after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0.6;
+      background-color: var(--filter-color);
+    }
+  }
+
+  // &.has-clip {
+  //   --skew: 2rem;
+  //   // --skew-2: 1rem;
+
+  //   > img {
+  //     // clip-path: polygon(
+  //     //   var(--skew) 0%,
+  //     //   100% 0%,
+  //     //   calc(100% - var(--skew)) 100%,
+  //     //   0% 100%
+  //     // );
+  //     // filter: drop-shadow(0 0 1rem rgba(0, 0, 0, 0.2));
+  //   }
+  //   position: relative;
+
+  //   > .picture-background {
+  //     position: absolute;
+
+  //     top: 0;
+  //     left: 0;
+  //     width: 100%;
+  //     height: 100%;
+  //     background-image: var(--src);
+  //     background-size: cover;
+  //     background-position: center;
+  //     z-index: -1;
+  //     // transform: skew(2deg, 2deg);
+  //     filter: blur(50px);
+  //     opacity: 0.7;
+
+  //     &:before {
+  //       content: "";
+  //       background-image: var(--gradient);
+  //       position: absolute;
+  //       top: 0;
+  //       left: 0;
+  //       width: 100%;
+  //       height: 100%;
+  //       opacity: 0.1;
+  //       z-index: 2;
+  //     }
+  //   }
+  // }
+}
+
+// reset figure styling
+figure {
+  margin: 0;
+  padding: 0;
+}
+
+// reset quote styling
+blockquote {
+  margin: 0;
+}
+
+// -------------------------------------------- //
+// BASIC COMPONENTS
+// -------------------------------------------- //
+
+// logo styling
+.logo {
+  width: 100%;
+  max-width: 100px;
+}
+
+// lazy loading
+.lazyload,
+.lazyloading {
+  opacity: 0;
+}
+.lazyloaded {
+  opacity: 1;
+  transition: opacity 1s;
+}
+// stripe extensions
+.stripe-thick {
+  @include text-border(0.2rem, white);
+  > .effect {
+    height: 0.2rem;
+  }
+}
+
+// focus
+.focus-border {
+  --focus-border: #4c7bc3;
+  --focus-outline: #4c7bc33b;
+  border-radius: 1px;
+  outline: 0px solid transparent;
+  outline-offset: 0;
+  box-shadow: 0 0 0 0rem var(--focus-outline);
+  transition: 0.5s ease;
+  &:focus {
+    outline: 1px solid var(--focus-border);
+    box-shadow: 0 0 0 0.25rem var(--focus-outline);
+  }
+}
+
+.block-link {
+  @extend .focus-border;
+  display: block;
+}
+
+// stagger
+.stagger {
+  > * {
+    opacity: 0;
+    transition: 1s;
+    transform: translateY(2rem);
+  }
+  &.is-active > * {
+    --delay: 0s;
+    opacity: 1;
+    transform: translateY(0%);
+    transition-delay: var(--delay);
+  }
+}

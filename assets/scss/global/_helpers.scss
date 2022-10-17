@@ -1,0 +1,12 @@
+.text-red {
+  color: var(--red);
+}
+
+// helpers
+@for $i from 1 through length($theme-colors) {
+  $color: nth($theme-colors, $i);
+  .theme-#{$i} {
+    background-color: $color;
+    color: white;
+  }
+}

@@ -1,0 +1,58 @@
+body .af-fields {
+  > .af-field,
+  .af-submit {
+    border: none;
+    padding: 0;
+  }
+
+  > *:not(:nth-last-child(1)) {
+    margin-bottom: 1rem;
+  }
+
+  .af-input {
+    --padding: 0.75rem 0.75rem;
+    position: relative;
+    > input,
+    > textarea {
+      padding: var(--padding);
+      font-size: 1em;
+      padding-top: 1.25rem;
+      padding-bottom: 0.25rem;
+      font-family: var(--body-font);
+      font-weight: var(--body-font-weight);
+
+      &::placeholder {
+        color: transparent;
+      }
+
+      &:focus-within,
+      &:not(:placeholder-shown) {
+        + label {
+          transform: translateY(-20%);
+          font-size: 80%;
+          font-weight: 800;
+        }
+      }
+    }
+
+    > label {
+      font-size: 1em;
+      padding: var(--padding);
+      position: absolute;
+      top: 0;
+      left: 0;
+      color: black;
+      pointer-events: none;
+      transition: 0.25s ease;
+    }
+  }
+
+  // hide labels for floating labels items
+  .af-field-type-email,
+  .af-field-type-textarea,
+  .af-field-type-text {
+    .af-label {
+      display: none;
+    }
+  }
+}

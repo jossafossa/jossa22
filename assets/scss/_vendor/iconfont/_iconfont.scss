@@ -1,0 +1,25 @@
+$iconfont-font: "iconfont";
+
+@font-face {
+    font-family: $iconfont-font;
+    src: url("../fonts/iconfont/iconfont.woff?7e17ee04604e752ad14434a189bfc9ca") format("woff"),
+url("../fonts/iconfont/iconfont.woff2?7e17ee04604e752ad14434a189bfc9ca") format("woff2");
+}
+
+i[class^="icon-"]:before, i[class*=" icon-"]:before, [class^="icon-"]:before,[class*=" icon-"]:before {
+    font-family: iconfont !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+$iconfont-map: (
+    "angle-right": "\f101",
+);
+
+.icon-angle-right:before {
+    content: map-get($iconfont-map, "angle-right");
+}

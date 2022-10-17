@@ -1,0 +1,106 @@
+// default transitions
+@mixin transition($transform, $speed) {
+  transition-duration: $speed;
+  transition-property: $transform;
+  transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+// force an aspect ratio
+@mixin aspect-ratio($x, $y) {
+  position: relative;
+  padding-bottom: 100% / $x * $y;
+
+  > * {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+// mixins
+@mixin active {
+  a:hover &,
+  a:focus & {
+    @content;
+  }
+}
+
+// em calc
+@function em-calc($values, $base: null) {
+  $rem-values: ();
+  $count: length($values);
+
+  // If no base is defined, defer to the global font size
+  @if $base == null {
+    $base: $global-font-size;
+  }
+
+  // If the base font size is a %, then multiply it by 16px
+  // This is because 100% font size = 16px in most all browsers
+  @if unit($base) == "%" {
+    $base: ($base / 100%) * 16px;
+  }
+
+  // Using rem as base allows correct scaling
+  @if unit($base) == "rem" {
+    $base: strip-unit($base) * 16px;
+  }
+
+  @if $count == 1 {
+    @return #{strip-unit(-zf-to-rem($values, $base))}em;
+  }
+
+  @for $i from 1 through $count {
+    $rem-values: append(
+      $rem-values,
+      #{strip-unit(-zf-to-rem(nth($values, $i), $base))}em
+    );
+  }
+
+  @return $rem-values;
+}
+
+@mixin headings {
+  > h1,
+  > h2,
+  > h3,
+  > h4,
+  > h5,
+  > h6 {
+    @content;
+  }
+}
+
+@mixin heading($type) {
+  %#{$type},
+  #{$type},
+  .#{$type} {
+    @content;
+  }
+}
+
+@mixin text-border($size: 2px, $color: black) {
+  text-shadow: 0 #{$size} 0 #{$color}, 0 #{-$size} 0 #{$color},
+    #{$size} 0 0 #{$color}, #{-$size} 0 #{$color}, #{$size} #{$size} 0 #{$color},
+    #{$size} #{-$size} 0 #{$color}, #{-$size} #{$size} 0 #{$color},
+    #{-$size} #{-$size} 0 #{$color};
+}
+
+@mixin breakpoint($breakpoint) {
+  // If the key exists in the map
+  @if map-has-key($breakpoints, $breakpoint) {
+    // Prints a media query based on the value
+    @media (min-width: map-get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  }
+
+  // If the key doesn't exist in the map
+  @else {
+    @warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. "
+        + "Available breakpoints are: #{map-keys($breakpoints)}.";
+  }
+}

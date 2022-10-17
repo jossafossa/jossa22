@@ -1,0 +1,30 @@
+.projects-swiper {
+  --spacing: 1rem;
+  --columns: 1.2;
+  overflow: visible;
+
+  @include breakpoint("mobile") {
+    overflow: hidden;
+    --columns: 2;
+  }
+  @include breakpoint("tablet") {
+    --columns: 2;
+  }
+  @include breakpoint("laptop") {
+    --columns: 3;
+  }
+  @include breakpoint("desktop") {
+    --columns: 4;
+  }
+
+  > .swiper-wrapper {
+    margin: 0 calc(-0.5 * var(--spacing));
+    width: calc(100% + var(--spacing));
+
+    > .swiper-slide {
+      width: calc(100% / var(--columns));
+      padding: 0 calc(var(--spacing) * 0.5);
+      margin: 0;
+    }
+  }
+}
