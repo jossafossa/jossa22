@@ -1,5 +1,6 @@
 .page-section {
-  padding: 4rem 0;
+  --section-spacing: 4rem;
+  padding: var(--section-spacing) 0;
 
   > picture {
     position: absolute;

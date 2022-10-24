@@ -1,7 +1,21 @@
-<?php include_once(__DIR__ . '/header.php' ); ?>
+<?php include_once(__DIR__ . '/header.php'); ?>
 
 <?php part('sections/section-hero', [
-  'image' => 'placeholder'
+  'image' => 'placeholder.jpg'
 ]); ?>
 
-<?php include_once(__DIR__ . '/footer.php' ); ?>
+<?php /*
+
+<?php part('sections/section-content', [
+  'title' => 'About',
+  'content' => ''
+  ]); ?>
+*/ ?>
+
+
+<?php part('sections/section-projects', [
+  'title' => 'All projects',
+  'projects' => ['project_2']
+]); ?>
+
+<?php include_once(__DIR__ . '/footer.php'); ?>
