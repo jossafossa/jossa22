@@ -148,3 +148,4 @@ dist
 
 # ignore build files
 build/*
+package-lock.json
