@@ -12,6 +12,7 @@
 
 body {
   height: 100vh;
+  overflow: auto;
 
   max-width: 100vw;
   // overflow: auto;
@@ -25,9 +26,8 @@ body {
 // test!!1
 
 main#main {
-  padding-top: var(--header-height);
   // overflow-x: hidden;
-  // height: 1000vh;
+  height: 1000vh;
 }
 
 // -------------------------------------------- //

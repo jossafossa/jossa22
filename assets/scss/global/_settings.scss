@@ -25,6 +25,8 @@ $theme-colors: (
   --gradient-dark: linear-gradient(to right, #261e3b, #182d57);
   --body-font: "Poppins", serif;
   --body-font-weight: 300;
+
+  --transition-base: 0.25s ease;
 }
 
 // large config
@@ -33,12 +35,12 @@ $theme-colors: (
 // css vars shunk: 5487 chars 5.36kb
 // gzip potential: 1646.1 chars 1.608kb
 //-------------
-$spacer: 16px;
+$spacer: 12px;
 $spacers: (
-  half: 8px,
-  1: 16px,
-  2: 32px,
-  large: 64px,
+  half: $spacer / 2,
+  1: $spacer,
+  2: $spacer * 2,
+  large: $spacer * 4,
 );
 
 $container-width: 1400px;
