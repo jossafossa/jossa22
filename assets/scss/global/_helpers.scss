@@ -2,6 +2,14 @@
   color: var(--red);
 }
 
+.text-center {
+  text-align: center;
+}
+
+.text-muted {
+  opacity: 0.5;
+}
+
 // helpers
 @for $i from 1 through length($theme-colors) {
   $color: nth($theme-colors, $i);
@@ -9,4 +17,32 @@
     background-color: $color;
     color: white;
   }
+}
+
+.has-radius {
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.ratio {
+  position: relative;
+  &:before {
+    content: "";
+    display: block;
+    padding-bottom: calc(100% / vaR(--rx, 1) * var(--ry, 1));
+  }
+
+  > * {
+    position: absolute;
+    inset: 0;
+  }
+}
+
+@mixin ratio($x, $y) {
+  --rx: #{$x};
+  --ry: #{$y};
+}
+
+.ratio-tall {
+  @include ratio(3, 4);
 }

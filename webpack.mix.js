@@ -31,7 +31,7 @@ mix
   }).imgs({
     source: 'assets/img',
     destination: 'build/img',
-    thumbnailsSizes: [150, 300, 600, 900, 1500, 3000],
+    thumbnailsSizes: [75, 150, 300, 600, 900, 1500, 3000],
     webp: true,
     // smallerThumbnailsOnly: true,
     thumbnailsOnly:true

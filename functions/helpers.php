@@ -1,25 +1,27 @@
 <?php
 
-/**
- * Get an image from slug
- */
+
 function get_image($slug) {
   $folder = '/build/img';
   $sizes = [150, 300, 600, 900, 1500, 3000];
-  $type = pathinfo($slug, PATHINFO_EXTENSION);
-  $name = pathinfo($slug, PATHINFO_FILENAME);
   $srcset = join(', ', array_map(
     fn ($size) =>
-    "$folder/$name@$size.$type ${size}w",
+    "$folder/$slug@$size.webp ${size}w",
     $sizes
   ));
-  return "<img 
-    data-src='$folder/$name.$type'
+  return "
+  <noscript>
+	  <img src='$slug.webp' />
+  </noscript>
+  <img 
+    data-src='$folder/$slug@75.webp'
     data-srcset='$srcset'
     data-sizes='auto'
     class='lazyload'
+    data-optimumx='1.5'
   />";
 }
+
 
 
 /**

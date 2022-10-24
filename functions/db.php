@@ -66,13 +66,15 @@ class Project {
     $settings = array_merge([
       'title' => false,
       'url' => '#',
-      'image' => 'placeholder.jpg',
+      'image' => 'placeholder',
       'slug' => false,
+      'subtitle' => 'project'
     ], $settings);
     $this->title = $settings['title'];
     $this->url = $settings['url'];
     $this->image = $settings['image'];
     $this->slug = $settings['slug'];
+    $this->subtitle = $settings['subtitle'];
   }
 }
 
@@ -98,15 +100,27 @@ $db = (object)[
   'projects' => [
     'project_1' => new Project([
       'title' => 'Test project',
-      'image' => 'placeholder.jpg',
+      'image' => 'placeholder',
       'url' => '#',
       'slug' => 'project_1'
     ]),
     'project_2' => new Project([
       'title' => 'Test project 2',
-      'image' => 'placeholder.jpg',
-      'url' => '#',
+      'image' => 'placeholder',
+    'url' => '#',
       'slug' => 'project_2'
+    ]),
+    'sliding_puzzle' => new Project([
+      'title' => 'Sliding Puzzle',
+      'image' => 'projects/sliding-puzzle',
+      'url' => 'https://codepen.io/Jossafossa/pen/zYjZQZR',
+      'slug' => 'sliding_puzzle'
+    ]),
+    'reveal' => new Project([
+      'title' => 'Reveal cats',
+      'image' => 'projects/reveal',
+      'url' => 'https://codepen.io/Jossafossa/pen/eYryzmp',
+      'slug' => 'reveal'
     ])
   ]
 ];
